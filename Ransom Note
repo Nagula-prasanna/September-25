@@ -1,0 +1,13 @@
+class Solution(object):
+    def canConstruct(self, ransomNote, magazine):
+        freq = {}
+        for char in magazine:
+            if char in freq:
+                freq[char] += 1
+            else:
+                freq[char] = 1
+        for char in ransomNote:
+            if char not in freq or freq[char] == 0:
+                return False
+            freq[char] -= 1
+        return True
