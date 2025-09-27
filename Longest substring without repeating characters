@@ -1,0 +1,14 @@
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        if not s:
+            return 0
+        last = [-1] * 128  
+        start = 0
+        longest = 0
+        for end, char in enumerate(s):
+            index = ord(char)
+            if last[index] >= start:
+                start = last[index] + 1
+            last[index] = end
+            longest = max(longest, end - start + 1)
+        return longest
