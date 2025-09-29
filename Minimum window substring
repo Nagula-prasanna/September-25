@@ -1,0 +1,32 @@
+from collections import Counter, defaultdict
+class Solution(object):
+    def minWindow(self, s, t):
+        if not s or not t:
+            return ""
+        target_counts = Counter(t)
+        required_chars = len(target_counts)
+        left = 0
+        right = 0
+        formed = 0
+        window_counts = defaultdict(int)
+        min_window_len = float("inf")
+        min_window_start = 0
+        while right < len(s):
+            current_char = s[right]
+            window_counts[current_char] += 1
+            if current_char in target_counts and window_counts[current_char] == target_counts[current_char]:
+                formed += 1
+            while formed == required_chars:
+                window_size = right - left + 1
+                if window_size < min_window_len:
+                    min_window_len = window_size
+                    min_window_start = left
+                left_char = s[left]
+                window_counts[left_char] -= 1
+                if left_char in target_counts and window_counts[left_char] < target_counts[left_char]:
+                    formed -= 1
+                left += 1
+            right += 1
+        if min_window_len == float("inf"):
+            return ""
+        return s[min_window_start:min_window_start + min_window_len]
