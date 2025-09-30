@@ -1,0 +1,18 @@
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        def count_greater_or_equal(array, value):
+            count = 0
+            for num in array:
+                if num >= value:
+                    count += 1
+            return count
+        low = min(nums)
+        high = max(nums)
+        while low <= high:
+            mid = (low + high) // 2
+            count = count_greater_or_equal(nums, mid)
+            if count >= k:
+                low = mid + 1
+            else:
+                high = mid - 1
+        return high
